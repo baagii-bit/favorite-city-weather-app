@@ -8,11 +8,19 @@ creat function to fetch API data
 create function to fetch api data when button is clicked
     addiventlistenter
 
+grab all 4 elements from HTML
+New function to display data into 4 html elements
+convert temp to C/F
+
+
 */
 
 var inputField = document.querySelector('#city');
-var button = document.querySelector('#get-weather')
-
+var button = document.querySelector('#get-weather');
+var tempEL = document.querySelector('#temp');
+var cityNameEl = document.querySelector('#city-name');
+var pressureEl = document.querySelector('#pressure');
+var descriptionEl = document.querySelector('#description');
 
 
 function fetchData() {
@@ -25,8 +33,22 @@ function fetchData() {
         return response.json()
         })
         .then(function(weatherData) {
-        console.log(weatherData)
-        })
+            console.log(weatherData);
+
+            var highTemp = weatherData.main.temp_max;
+            highTemp = highTemp -273.15;
+            var lowTemp = weatherData.main.temp_min;
+            lowTemp =  lowTemp -273.15;
+
+
+            tempEL.textContent = "Highs of " + highTemp + " and low of " + lowTemp + ".";
+            cityNameEl.textContent = weatherData.name;
+            pressureEl.textContent = "High presssure of: " + weatherData.main.pressure;
+            descriptionEl.textContent = weatherData.weather[0].description;
+            
+        });
+
+    inputField.value = "";
 
 }
 
